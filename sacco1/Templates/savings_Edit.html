@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Savings{% endblock title %}
+
+
+{% block content %}
+  <div class="content">
+    <div class="container-fluid">
+      <div class="card animated fadeInUp">
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data">
+          
+            <a href="{% url 'savings' %}" class="btn btn-info">Back Home</a>
+            <div class="form-group">
+              
+              {% csrf_token %}
+              {{ savings_form.as_p }}
+            </div>
+          
+          
+            <input type="submit" value="Update" class="btn btn-primary" />
+            <a href="{% url 'savings' %}" class="btn btn-info">Back Home</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock content %}

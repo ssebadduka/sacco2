@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Savings{% endblock title %}
+
+{% block breadcrumb %}
+<a class="btn btn-primary" href="#" data-toggle="modal" data-target="#exampleModal"><i
+    class="fas fa-plus"></i> New savings</a>
+
+    <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register savings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cl1ose">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ savings_form.as_table }}
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal -->
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="table-responsive">
+    <table id="studenttable" class="table table-bordered table-hover" data-page-length='100'>
+      
+      <thead class="thead-light">
+        <tr>
+          <th>S/N</th>
+          <th>Name</th>
+          <th>Savings</th>
+          <th>Date Saved</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for savings in Get_savingss %}
+          <tr>
+            <td>{{savings.id}}</td>
+            <td>{{savings.Name}}</td>
+            <td>{{savings.Ammount_saved}}</td>
+            <td>                    
+              <a href="{% url 'Edit' savings.id %}" style="color:inherit">
+                  <i class="fa fa-edit"></i>
+              </a> |
+              <a href="{% url 'Delete' savings.id %}" style="color: inherit">
+                  <i class="fa fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+
+      </tbody>
+      
+    </table>
+  </div>
+{% endblock content %}
+
+
+{% block morejs %}
+<script>
+  $('#studenttable').DataTable({
+  });
+</script>
+
+{% endblock morejs %}

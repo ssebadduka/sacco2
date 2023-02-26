@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Member{% endblock title %}
+
+{% block breadcrumb %}
+<a class="btn btn-primary" href="#" data-toggle="modal" data-target="#exampleModal"><i
+    class="fas fa-plus"></i> New member</a>
+
+    <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register member</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cl1ose">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ member_form.as_table }}
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal -->
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="table-responsive">
+    <table id="studenttable" class="table table-bordered table-hover" data-page-length='100'>
+      
+      <thead class="thead-light">
+        <tr>
+          <th>S/N</th>
+          <th>Name</th>
+        
+          <th>Contact</th>
+          <th>National ID</th>
+          <th>Address</th>
+          <th>Next Of Kin Contact</th>
+          
+          <th>photo</th>
+          <th>#</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for member in Get_members %}
+          <tr>
+            <td>{{member.id}}</td>
+            <td>{{member.Full_Name}}</td>
+            
+            <td>{{member.Contact}}</td>
+            <td>{{member.National_id}}</td>
+            <td>{{member.Address}}</td>
+            <td>{{member.Next_of_kin_Contact}}</td>
+            <td><img src="{{member.m_image.url }}" height="50" width="50"></td>              
+            <td>                    
+              <a href="{% url 'Edit' member.id %}" style="color:inherit">
+                  <i class="fa fa-edit"></i>
+              </a> |
+              <a href="{% url 'Delete' member.id %}" style="color: inherit">
+                  <i class="fa fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+
+      </tbody>
+      
+    </table>
+  </div>
+{% endblock content %}
+
+
+{% block morejs %}
+<script>
+  $('#studenttable').DataTable({
+  });
+</script>
+
+{% endblock morejs %}
